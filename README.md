@@ -1,19 +1,17 @@
 # Geoserver bootstrap layers
 
-This docker image will create a workspace on geoserver and then will upload
-shapefile in `/data/` directory to create layer on geoserver.
+This docker image will first create a workspace in a GeoServer instance and then upload
+shapefiles from the `/data/` directory to create the corresponding layers in GeoServer.
 
 ## Configuration
 
-Set following env var in docker-compose.yml file:
+Set the following environment vars in the docker-compose.yml file:
 
 * `GEOSERVER_URL`: base url to geoserver (ex: http://172.17.0.1:8080/geoserver)
 * `GEOSERVER_USER`: geoserver user
 * `GEOSERVER_PASSWORD`: geoserver password
 * `GEOSERVER_WORKSPACE`: name of the workspace to create
  
-Then mount a directory with shapefiles in `/data/` directory inside docker
-image.
+Then mount a directory filled with shapefiles in the container `/data/` directory.
 
-This image use (https://github.com/jericks/geoserver-shell) to manage geoserver
-REST interface.
+This image uses (https://github.com/jericks/geoserver-shell) to interact with GeoServer.
