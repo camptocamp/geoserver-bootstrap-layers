@@ -7,7 +7,7 @@ If the workspace already exists, no layer will be created.
 
 ## Configuration
 
-Set the following environment vars in the docker-compose.yml file:
+Set the following environment vars in the `docker-compose.yml` file:
 
 * `GEOSERVER_URL`: base url to geoserver (ex: http://172.17.0.1:8080/geoserver)
 * `GEOSERVER_USER`: geoserver user
