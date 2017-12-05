@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  bootstrap-geoserver:
+    image: camptocamp/geoserver-bootstrap-layers:latest
+    build: ./
+    environment:
+      - GEOSERVER_URL=http://172.17.0.1:8080/geoserver
+      - GEOSERVER_USER=geoserver_user
+      - GEOSERVER_PASSWORD=xxxxxxxxxxx
+      - GEOSERVER_WORKSPACE=test
+    volumes:
+      - ./data:/data

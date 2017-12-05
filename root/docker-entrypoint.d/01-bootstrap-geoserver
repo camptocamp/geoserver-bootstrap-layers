@@ -1,0 +1,27 @@
+#!/bin/bash
+CONNECT_STRING="geoserver set --url $GEOSERVER_URL --user $GEOSERVER_USER --password $GEOSERVER_PASSWORD"
+TEMP_SCRIPT=/gs-script.txt
+SHP_DIR=/data
+
+echo $CONNECT_STRING > $TEMP_SCRIPT
+echo "workspace get --name $GEOSERVER_WORKSPACE" >> $TEMP_SCRIPT
+
+java -jar /gs-shell-0.4-SNAPSHOT.jar --cmdfile $TEMP_SCRIPT
+if [ $? -ne 0 ]; then
+  echo "Workspace $GEOSERVER_WORKSPACE not found"
+  echo $CONNECT_STRING > $TEMP_SCRIPT
+  echo "workspace create --name $GEOSERVER_WORKSPACE" >> $TEMP_SCRIPT
+  for shp in `ls $SHP_DIR/*.shp`; do
+    BASENAME=`basename $shp .shp`
+    SHP_FILE=$SHP_DIR/$BASENAME.shp
+    ZIP_FILE=$SHP_DIR/$BASENAME.zip
+    echo "Shapefile: $SHP_FILE"
+    echo "Zipfile  : $ZIP_FILE"
+    echo "shapefile zip --shapefile $SHP_FILE" >> $TEMP_SCRIPT
+    echo "shapefile publish --workspace $GEOSERVER_WORKSPACE --file $ZIP_FILE" >> $TEMP_SCRIPT
+  done
+  cat $TEMP_SCRIPT
+  java -jar /gs-shell-0.4-SNAPSHOT.jar --cmdfile $TEMP_SCRIPT
+else
+  echo "Workspace $GEOSERVER_WORKSPACE already present"
+fi
