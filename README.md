@@ -1,4 +1,4 @@
-# Geoserver bootstrap layers
+# GeoServer bootstrap layers
 
 This docker image will first create a workspace in a GeoServer instance and then upload
 shapefiles from the `/data/` directory to create the corresponding layers in GeoServer.
